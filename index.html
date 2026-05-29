@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DEATH INJECTOR V1 - PREMIUM PANEL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- DANGEROUS CYBERPUNK BEAST THEME --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Orbitron', 'Segoe UI', sans-serif; user-select: none; }
+        body { background: #050508; color: #fff; overflow: hidden; height: 100vh; width: 100vw; }
+        
+        /* Deep Premium Glow Elements */
+        .glow-text { text-shadow: 0 0 10px #ff003c, 0 0 20px #ff003c; color: #ff003c; }
+        .gold-text { color: #ffbc00; text-shadow: 0 0 8px rgba(255,188,0,0.5); }
+
+        /* Full Screen Wrapper */
+        .panel-wrap { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle at center, #1a050d 0%, #050508 100%); z-index: 10; overflow-y: auto; padding: 20px 10px; }
+        .beast-box { width: 100%; max-width: 360px; padding: 30px; background: rgba(13, 13, 21, 0.95); border-radius: 20px; border: 2px solid #ff003c; box-shadow: 0 0 35px rgba(255, 0, 60, 0.3), inset 0 0 15px rgba(255, 0, 60, 0.1); text-align: center; position: relative; margin: auto; }
+        .beast-box h2 { font-size: 26px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; font-weight: 900; line-height: 1.3; }
+        
+        /* Inputs */
+        .input-wrap { position: relative; margin-bottom: 18px; }
+        .input-wrap i { position: absolute; left: 14px; top: 15px; color: #ff003c; font-size: 18px; }
+        .input-wrap input { width: 100%; padding: 14px 14px 14px 45px; background: #14141f; border: 1px solid #33141c; border-radius: 10px; color: #fff; outline: none; transition: 0.3s; font-size: 14px; border-bottom: 2px solid #ff003c; }
+        .input-wrap input:focus { border-color: #ffbc00; box-shadow: 0 0 15px rgba(255, 188, 0, 0.4); }
+        
+        /* Buttons Setup with High Priority Z-Index */
+        button { width: 100%; padding: 14px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 12px; text-transform: uppercase; letter-spacing: 1.5px; font-size: 14px; position: relative; z-index: 9999 !important; touch-action: manipulation; }
+        .btn-death-login { background: linear-gradient(135deg, #ff003c, #990024); color: #fff; box-shadow: 0 5px 20px rgba(255, 0, 60, 0.5); border: 1px solid #ff5577; }
+        .btn-death-login:hover { transform: scale(1.02); background: linear-gradient(135deg, #ff1a4e, #b3002d); }
+        .btn-sub { background: #1a1a26; color: #a1a1b3; border: 1px solid #33334d; }
+        .btn-sub:hover { color: #ffbc00; border-color: #ffbc00; box-shadow: 0 0 10px rgba(255, 188, 0, 0.2); }
+        .btn-fire-gen { background: linear-gradient(135deg, #ffbc00, #cc8100); color: #000 !important; box-shadow: 0 5px 20px rgba(255, 188, 0, 0.4); font-weight: 900; margin-top: 25px; display: block; }
+        
+        /* Copyright Branding footer design */
+        .panel-copyright { margin-top: 25px; font-size: 10px; color: #555566; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* --- Verification & Lock Pages Layout --- */
+        .lock-page { display: none; }
+        .poster-slot { width: 100%; height: 160px; background: #14141f; margin: 20px 0; border-radius: 10px; border: 1px dashed #ff003c; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 10px; }
+        .poster-slot i { font-size: 40px; color: #ffbc00; margin-bottom: 10px; }
+        .poster-title { font-size: 14px; font-weight: bold; color: #fff; text-transform: uppercase; }
+        .poster-desc { font-size: 11px; color: #8a8a9e; margin-top: 5px; }
+
+        .timer-circle { width: 80px; height: 80px; border: 3px solid #14141f; border-top: 3px solid #ff003c; border-radius: 50%; margin: 20px auto; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: bold; }
+        .timer-circle span { color: #ff003c; }
+
+        .scroll-alert { display: none; color: #00ff66; font-size: 13px; font-weight: bold; margin: 20px 0; animation: blink 1s infinite; text-transform: uppercase; background: rgba(0, 255, 102, 0.1); padding: 10px; border-radius: 6px; border: 1px solid #00ff66; }
+        .scroll-space { display: none; flex-direction: column; justify-content: center; align-items: center; color: #8a8a9e; font-size: 12px; border-top: 1px dashed #333; margin-top: 20px; padding-top: 15px; }
+
+        /* Output Credentials Page */
+        .cred-field { background: #14141f; padding: 12px; border-radius: 8px; border: 1px solid #33141c; margin: 12px 0; text-align: left; position: relative; display: flex; justify-content: space-between; align-items: center; }
+        .cred-data { font-family: 'Orbitron', monospace; font-size: 13px; color: #ffbc00; font-weight: bold; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,188,0,0.3); }
+        .btn-copy { width: auto; margin: 0; padding: 6px 12px; background: #ff003c; color: #fff; font-size: 11px; border-radius: 4px; }
+
+        /* Success Overlay Alert */
+        .success-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,5,8,0.95); z-index: 9999; display: none; justify-content: center; align-items: center; flex-direction: column; }
+        .success-card { background: #0d0d15; padding: 40px; border-radius: 20px; border: 2px solid #00ff66; text-align: center; box-shadow: 0 0 25px rgba(0, 255, 102, 0.2); }
+        .success-card i { font-size: 60px; color: #00ff66; margin-bottom: 20px; animation: scaleUp 0.5s ease; }
+        .success-card h3 { font-size: 24px; color: #fff; letter-spacing: 2px; }
+
+        /* --- FLOATING MOD MENU LAYOUT --- */
+        .floating-menu { position: absolute; top: 120px; left: 40px; width: 300px; background: rgba(13, 13, 21, 0.98); border: 2px solid #ff003c; border-radius: 14px; box-shadow: 0 15px 40px rgba(255,0,60,0.4); display: none; z-index: 999; backdrop-filter: blur(8px); }
+        .menu-header { background: #1c1c2b; padding: 14px; border-top-left-radius: 12px; border-top-right-radius: 12px; cursor: move; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff003c; }
+        .menu-title { font-weight: 900; color: #fff; font-size: 13px; letter-spacing: 2px; }
+        .menu-btns i { cursor: pointer; margin-left: 12px; font-size: 18px; transition: 0.2s; color: #ff003c; }
+        .menu-btns i:hover { color: #ffbc00; transform: scale(1.2); }
+        .menu-content { padding: 18px; max-height: 380px; overflow-y: auto; }
+        
+        /* Modern Switches */
+        .menu-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .menu-item span { font-size: 14px; color: #e1e1e6; font-weight: 600; letter-spacing: 0.5px; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #2a2a3d; transition: .3s; border-radius: 24px; border: 1px solid #444; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: #fff; transition: .3s; border-radius: 50%; box-shadow: 0 0 5px #000; }
+        input:checked + .slider { background-color: #ff003c; border-color: #ff5577; }
+        input:checked + .slider:before { transform: translateX(20px); background-color: #fff; }
+        
+        /* Seek Bar Custom Style */
+        .range-box { margin-bottom: 16px; background: #14141f; padding: 12px; border-radius: 8px; border: 1px solid #222; }
+        .range-box label { display: flex; justify-content: space-between; font-size: 12px; color: #a1a1b3; margin-bottom: 8px; }
+        .range-box input { width: 100%; accent-color: #ff003c; cursor: pointer; background: #2a2a3d; height: 6px; border-radius: 4px; outline: none; }
+
+        /* Floating Initial Animated Logo Icon (D) */
+        .floating-logo { position: absolute; top: 200px; left: 200px; width: 60px; height: 60px; background: linear-gradient(135deg, #ff003c, #990024); border: 2px solid #ffbc00; border-radius: 50%; display: none; justify-content: center; align-items: center; font-weight: 900; font-size: 26px; color: #fff; cursor: move; box-shadow: 0 0 20px #ff003c; z-index: 1000; text-shadow: 0 0 5px #000; animation: floatAnim 3s ease-in-out infinite; }
+
+        /* Dynamic Green Circle Engine */
+        #fov-circle { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 2.5px solid #00ff66; border-radius: 50%; pointer-events: none; display: none; z-index: 998; box-shadow: 0 0 15px rgba(0, 255, 102, 0.5), inset 0 0 10px rgba(0, 255, 102, 0.2); }
+
+        /* Animations Pack */
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        @keyframes scaleUp { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes floatAnim { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="success-overlay" id="login-success-screen">
+        <div class="success-card">
+            <i class="fa-solid fa-circle-check"></i>
+            <h3>SUCCESSFULLY LOGINED</h3>
+        </div>
+    </div>
+
+    <div class="panel-wrap" id="auth-layer">
+        
+        <div class="beast-box" id="screen-login" style="display: block;">
+            <h2 class="glow-text">DEATH INJECTOR V1</h2>
+            <div class="input-wrap">
+                <i class="fa-solid fa-user-secret"></i>
+                <input type="text" id="username" placeholder="ENTER USERNAME">
+            </div>
+            <div class="input-wrap">
+                <i class="fa-solid fa-key"></i>
+                <input type="password" id="password" placeholder="ENTER PASSWORD">
+            </div>
+            <button class="btn-death-login" onclick="processLogin()">LOGIN TO SYSTEM</button>
+            <button class="btn-sub" onclick="saveDataLocally()">SAVE USER & PASS</button>
+            
+            <button class="btn-fire-gen" onclick="triggerLockMechanism(); return false;">GENERATE USER/PASS</button>
+            
+            <div class="panel-copyright">COPYRIGHT © 2026 DEATH SYSTEM</div>
+        </div>
+
+        <div class="beast-box lock-page" id="screen-lock-engine">
+            <h2 class="gold-text" id="lock-header">VERIFYING...</h2>
+            
+            <div class="poster-slot" id="dynamic-poster"></div>
+
+            <p style="color:#a1a1b3; font-size:13px; letter-spacing: 0.5px;" id="status-hint">Please Wait 15 second and page unlock</p>
+            
+            <div class="timer-circle" id="circle-wrapper"><span id="timer-digit">15</span></div>
+            
+            <div class="scroll-alert" id="scroll-notification">PLEASE SCROLL DOWN AND CONTINUE</div>
+            
+            <div class="scroll-space" id="scroll-target-area">
+                <p><i class="fa-solid fa-angles-down" style="font-size:24px; color:#00ff66; animation: floatAnim 1.5s infinite;"></i></p>
+                <p style="margin-top:10px; margin-bottom: 15px;">Scroll end reached</p>
+                <button class="btn-death-login" style="width:100%;" id="btn-continue" onclick="advanceStep(); return false;">CONTINUE SYSTEM</button>
+            </div>
+        </div>
+
+        <div class="beast-box lock-page" id="screen-output">
+            <h2 class="glow-text" style="font-size:18px;">GENERATED SUCCESSFULLY</h2>
+            <p style="color:#6e6e85; font-size:12px; margin-bottom:15px;">Valid for 24 Hours Only. Expire system active.</p>
+            
+            <div class="cred-field">
+                <div>
+                    <span style="font-size:10px; color:#6e6e85; display:block;">NEW USERNAME</span>
+                    <span class="cred-data" id="out-user">---</span>
+                </div>
+                <button class="btn-copy" onclick="copyValue('out-user', 'username is copy'); return false;">COPY</button>
+            </div>
+
+            <div class="cred-field">
+                <div>
+                    <span style="font-size:10px; color:#6e6e85; display:block;">NEW PASSWORD</span>
+                    <span class="cred-data" id="out-pass">---</span>
+                </div>
+                <button class="btn-copy" onclick="copyValue('out-pass', 'password is copy'); return false;">COPY</button>
+            </div>
+
+            <button class="btn-sub" style="margin-top:20px; border-color:#ffbc00; color:#ffbc00;" onclick="routeToLogin(); return false;">BACK TO LOGIN</button>
+        </div>
+
+    </div>
+
+    <div class="floating-menu" id="mod-hacks-container">
+        <div class="menu-header" id="drag-handle">
+            <div class="menu-title glow-text">DEATH MOD MENU</div>
+            <div class="menu-btns">
+                <i class="fa-solid fa-circle-minus" onclick="hideToLogo()" title="Minimize Menu"></i>
+                <i class="fa-solid fa-rectangle-xmark" onclick="destroyMenuSystem()" title="Remove Menu"></i>
+            </div>
+        </div>
+        <div class="menu-content">
+            
+            <div class="menu-item">
+                <span>Marco Sensi</span>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+            <div class="menu-item">
+                <span>Drag Sensi</span>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+            <div class="menu-item">
+                <span>Head 50%</span>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+
+            <div class="menu-item" style="margin-bottom:5px;">
+                <span>Aim Fov360%</span>
+                <label class="switch"><input type="checkbox" id="fov-trigger" onchange="toggleFovCanvas()"><span class="slider"></span></label>
+            </div>
+            <div class="range-box">
+                <label><span>Circle Radius Control</span><span id="fov-lbl-val" style="color:#ffbc00;">120px</span></label>
+                <input type="range" id="fov-slider-scale" min="20" max="400" value="120" oninput="syncFovDimension()">
+            </div>
+
+            <div class="menu-item">
+                <span>Aim Sensi</span>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+            <div class="menu-item">
+                <span>Aimlock 50%</span>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="floating-logo" id="minimized-logo-node" onclick="restoreFromLogo()">D</div>
+
+    <div id="fov-circle"></div>
+
+
+    <script>
+        let currentLockPhase = 1;
+        let clockIntervalId;
+
+        const pathPosters = [
+            { icon: "fa-shield-halved", title: "BYPASS ACTIVE", desc: "Anti-Ban script injecting into security clusters." },
+            { icon: "fa-database", title: "DATABASE LINK", desc: "Syncing premium cloud configurations securely." },
+            { icon: "fa-bolt", title: "OPTIMIZING SPEED", desc: "Calibrating macro sensory data rendering modules." },
+            { icon: "fa-skull-crossbones", title: "FINALIZING INJECTOR", desc: "Setting up encryption layer for hardware security." }
+        ];
+
+        window.addEventListener("DOMContentLoaded", () => {
+            if(localStorage.getItem("death_saved_u")) {
+                document.getElementById("username").value = localStorage.getItem("death_saved_u");
+                document.getElementById("password").value = localStorage.getItem("death_saved_p");
+            }
+        });
+
+        function saveDataLocally() {
+            let uData = document.getElementById("username").value;
+            let pData = document.getElementById("password").value;
+            if(uData.trim() !== "" && pData.trim() !== "") {
+                localStorage.setItem("death_saved_u", uData);
+                localStorage.setItem("death_saved_p", pData);
+                speakVoiceFeedback("credentials saved");
+                alert("SUCCESS: User and Password Saved Locally!");
+            } else {
+                alert("ERROR: Enter Username and Password first!");
+            }
+        }
+
+        // Clean & Clear Global Window Trigger System
+        window.triggerLockMechanism = function() {
+            currentLockPhase = 1;
+            document.getElementById("screen-login").style.display = "none";
+            document.getElementById("screen-lock-engine").style.display = "block";
+            executeTimeLockEngine();
+        }
+
+        function executeTimeLockEngine() {
+            let remainingTicks = 15;
+            let currentPoster = pathPosters[currentLockPhase - 1];
+            
+            document.getElementById("lock-header").innerText = `PAGE LOCK SYSTEM - STEP ${currentLockPhase}/4`;
+            document.getElementById("dynamic-poster").innerHTML = `
+                <i class="fa-solid ${currentPoster.icon}"></i>
+                <div class="poster-title">${currentPoster.title}</div>
+                <div class="poster-desc">${currentPoster.desc}</div>
+            `;
+
+            document.getElementById("status-hint").style.display = "block";
+            document.getElementById("circle-wrapper").style.display = "flex";
+            document.getElementById("timer-digit").innerText = remainingTicks;
+            document.getElementById("scroll-notification").style.display = "none";
+            document.getElementById("scroll-target-area").style.display = "none";
+            
+            document.getElementById("auth-layer").scrollTop = 0;
+
+            clearInterval(clockIntervalId);
+            clockIntervalId = setInterval(() => {
+                remainingTicks--;
+                document.getElementById("timer-digit").innerText = remainingTicks;
+                
+                if(remainingTicks <= 0) {
+                    clearInterval(clockIntervalId);
+                    document.getElementById("status-hint").style.display = "none";
+                    document.getElementById("circle-wrapper").style.display = "none";
+                    document.getElementById("scroll-notification").style.display = "block";
+                    document.getElementById("scroll-target-area").style.display = "flex";
+                }
+            }, 1000);
+        }
+
+        window.advanceStep = function() {
+            if (currentLockPhase < 4) {
+                currentLockPhase++;
+                executeTimeLockEngine();
+            } else {
+                document.getElementById("screen-lock-engine").style.display = "none";
+                document.getElementById("screen-output").style.display = "block";
+                
+                let randNum1 = Math.floor(1000 + Math.random() * 8999);
+                let randNum2 = Math.floor(10000 + Math.random() * 89999);
+                
+                let compiledUser = `💀[DEATH-${randNum1}]`;
+                let compiledPass = `🔑[X-PASS-${randNum2}]`;
+                let validityThreshold = Date.now() + (24 * 60 * 60 * 1000);
+
+                localStorage.setItem("active_token_u", compiledUser);
+                localStorage.setItem("active_token_p", compiledPass);
+                localStorage.setItem("active_token_expiry", validityThreshold);
+
+                document.getElementById("out-user").innerText = compiledUser;
+                document.getElementById("out-pass").innerText = com
