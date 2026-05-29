@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEATH NOTE PANEL V1</title>
+    <style>
+        :root {
+            --bg-color: #0d0d11;
+            --panel-bg: #16161f;
+            --accent-color: #ff3333;
+            --text-color: #ffffff;
+            --text-dim: #a0a0aa;
+            --border-color: #2a2a35;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Main Container Card */
+        .container {
+            background: var(--panel-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        h2 {
+            color: var(--accent-color);
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            font-size: 24px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.3);
+        }
+
+        /* Forms & Inputs */
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            background: #09090d;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--accent-color);
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent-color);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: #252530;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: #2f2f3d;
+        }
+
+        .msg {
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Key Generator Pages */
+        .scroll-container {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px dashed var(--border-color);
+            padding: 15px;
+            margin-bottom: 20px;
+            background: #09090d;
+            font-size: 13px;
+            color: var(--text-dim);
+            text-align: left;
+        }
+
+        .copy-box {
+            display: flex;
+            align-items: center;
+            background: #09090d;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 15px;
+            padding: 5px 10px;
+        }
+
+        .copy-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .btn-copy {
+            background: var(--border-color);
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .btn-copy:hover {
+            background: var(--accent-color);
+        }
+
+        /* Floating Menu Style */
+        .floating-menu {
+            position: fixed;
+            top: 20%;
+            left: 20%;
+            width: 280px;
+            background: rgba(22, 22, 31, 0.95);
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.2);
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+
+        .menu-header {
+            background: var(--accent-color);
+            padding: 10px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+            border-top-left-radius: 7px;
+            border-top-right-radius: 7px;
+            font-size: 14px;
+        }
+
+        .menu-owner {
+            font-size: 11px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px 8px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .menu-content {
+            padding: 15px;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        /* Switch Styling */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .switch input { display: none; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #333;
+            transition: .3s;
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px; width: 14px;
+            left: 3px; bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: var(--accent-color); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .menu-footer {
+            display: flex;
+            gap: 10px;
+            padding: 10px 15px 15px;
+        }
+
+        .menu-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .btn-close { background: #333; color: white; }
+        .btn-remove { background: #ff3333; color: white; }
+
+        /* Floating Icon */
+        .floating-icon {
+            position: fixed;
+            top: 50%;
+            left: 10px;
+            width: 50px;
+            height: 50px;
+            background: var(--bg-color);
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: var(--accent-color);
+            cursor: move;
+            z-index: 9999;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.4);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loginPanel" class="container">
+        <h2>Death Note Panel V1</h2>
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" id="usernameInput" placeholder="Enter Username">
+        </div>
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+        </div>
+        <button class="btn" onclick="handleLogin()">Login</button>
+        <button class="btn btn-secondary" onclick="startKeyGen()">Generate User & Pass</button>
+        <div id="loginMsg" class="msg"></div>
+    </div>
+
+    <div id="genPanel" class="container hidden">
+        <h2 id="genTitle">Checking Security...</h2>
+        <div class="scroll-container">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Please review the terms of initialization. Scroll completely to the bottom to verify you are not a bot.</p>
+            <br>
+            <p>Death Note Panel V1 requires system architecture synchronization. Do not reload this script or leave the validation stack interface.</p>
+        </div>
+        <div id="timerStatus" style="margin-bottom: 15px; font-weight: bold; color: var(--accent-color);">Please Wait...</div>
+        <button id="continueBtn" class="btn hidden" onclick="nextGenPage()">Continue</button>
+    </div>
+
+    <div id="finalKeyPanel" class="container hidden">
+        <h2>Death Note Panel V1</h2>
+        <p style="font-size: 12px; color: var(--text-dim); margin-bottom: 15px;">Your credentials have been successfully generated!</p>
+        
+        <label>Generated Username</label>
+        <div class="copy-box">
+            <input type="text" id="genUser" readonly>
+            <button class="btn-copy" onclick="copyField('genUser')">Copy</button>
+        </div>
+
+        <label>Generated Password</label>
+        <div class="copy-box">
+            <input type="text" id="genPass" readonly>
+            <button class="btn-copy" onclick="copyField('genPass')">Copy</button>
+        </div>
+
+        <div style="margin-top: 15px; font-size: 13px;">
+            <span>Expires in: </span>
+            <span id="expireDuration" style="color: var(--accent-color); font-weight: bold;"></span>
+        </div>
+        
+        <button class="btn btn-secondary" style="margin-top: 20px;" onclick="backToLogin()">Back to Login</button>
+    </div>
+
+    <div id="floatingMenu" class="floating-menu hidden">
+        <div class="menu-header" id="menuHeader">
+            <span>DEATH NOTE PANEL V1</span>
+        </div>
+        <div class="menu-owner">Owner: Biswajit Rabha</div>
+        <div class="menu-content">
+            <div class="menu-item"><span>Sensi Menu</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div class="menu-item"><span>Drag Head</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div class="menu-item"><span>Drag Macro</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div class="menu-item"><span>Drag Sensi</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div class="menu-item"><span>Macro Sensi</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div class="menu-item"><span>Drag head 70%</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div class="menu-item"><span>Aim lock 50%</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div class="menu-item"><span>Accuracy 50%</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div class="menu-item"><span>Aim head 50%</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div class="menu-item"><span>Redegit Sensi</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div class="menu-item"><span>Redegit Macro</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        </div>
+        <div class="menu-footer">
+            <button class="menu-btn btn-close" onclick="minimizeMenu()">Minimize</button>
+            <button class="menu-btn btn-remove" onclick="removeMenu()">Remove</button>
+        </div>
+    </div>
+
+    <div id="floatingIcon" class="floating-icon hidden" onclick="maximizeMenu()">DTH</div>
+
+    <script>
+        // State variables
+        let currentStep = 1;
+        let generatedUser = "";
+        let generatedPass = "";
+        let expiryTime = null;
+
+        // Configuration Arrays for Random Expiry Logic
+        const expiryOptions = [
+            { display: "1 Minute", ms: 1 * 60 * 1000 },
+            { display: "2 Minutes", ms: 2 * 60 * 1000 },
+            { display: "3 Minutes", ms: 3 * 60 * 1000 },
+            { display: "4 Minutes", ms: 4 * 60 * 1000 },
+            { display: "5 Minutes", ms: 5 * 60 * 1000 },
+            { display: "10 Minutes", ms: 10 * 60 * 1000 },
+            { display: "20 Hours", ms: 20 * 60 * 60 * 1000 }
+        ];
+
+        // --- KEY GENERATOR ENGINE ---
+        function startKeyGen() {
+            document.getElementById('loginPanel').classList.add('hidden');
+            document.getElementById('genPanel').classList.remove('hidden');
+            currentStep = 1;
+            loadGenPage();
+        }
+
+        function loadGenPage() {
+            document.getElementById('genTitle').innerText = `Step Verification (${currentStep}/5)`;
+            const timerStatus = document.getElementById('timerStatus');
+            const continueBtn = document.getElementById('continueBtn');
+            
+            // Setup internal invisible logic states
+            timerStatus.innerText = "Please Wait...";
+            continueBtn.classList.add('hidden');
+
+            // 15-Second Silent Timer
+            setTimeout(() => {
+                timerStatus.innerText = "Please scroll down and continue";
+                continueBtn.classList.remove('hidden');
+            }, 15000);
+        }
+
+        function nextGenPage() {
+            if (currentStep < 4) {
+                currentStep++;
+                loadGenPage();
+            } else {
+                generateFinalKey();
+            }
+        }
+
+        function generateFinalKey() {
+            document.getElementById('genPanel').classList.add('hidden');
+            document.getElementById('finalKeyPanel').classList.remove('hidden');
+
+            // Generate Secure Strings
+            generatedUser = "DTH_" + Math.random().toString(36).substring(2, 7).toUpperCase();
+            generatedPass = Math.floor(100000 + Math.random() * 900000);
+
+            // Select Random Lifespan Configuration
+            const choice = expiryOptions[Math.floor(Math.random() * expiryOptions.length)];
+            expiryTime = Date.now() + choice.ms;
+
+            // Update UI Elements
+            document.getElementById('genUser').value = generatedUser;
+            document.getElementById('genPass').value = generatedPass;
+            document.getElementById('expireDuration').innerText = choice.display;
+        }
+
+        function copyField(fieldId) {
+            const copyText = document.getElementById(fieldId);
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+        }
+
+        function backToLogin() {
+            document.getElementById('finalKeyPanel').classList.add('hidden');
+            document.getElementById('loginPanel').classList.remove('hidden');
+        }
+
+        // --- AUTHENTICATION ENGINE ---
+        function handleLogin() {
+            const uInput = document.getElementById('usernameInput').value.trim();
+            const pInput = document.getElementById('passwordInput').value.trim();
+            const msg = document.getElementById('loginMsg');
+
+            if (!generatedUser || !generatedPass) {
+                msg.style.color = "var(--accent-color)";
+                msg.innerText = "Generate a user/pass key first!";
+                return;
+            }
+
+            // Check Expiration Status First
+            if (Date.now() > expiryTime) {
+                msg.style.color = "var(--accent-color)";
+                msg.innerText = "Key Expired! Please generate a new one.";
+                return;
+            }
+
+            // Verify Key Matching Pairs
+            if (uInput === generatedUser && pInput === String(generatedPass)) {
+                msg.style.color = "#00ffcc";
+                msg.innerText = "Login Correct! Loading panel...";
+                setTimeout(() => {
+                    document.getElementById('loginPanel').classList.add('hidden');
+                    document.getElementById('floatingMenu').classList.remove('hidden');
+                }, 1000);
+            } else {
+                msg.style.color = "var(--accent-color)";
+                msg.innerText = "Wrong username or password!";
+            }
+        }
+
+        // --- FLOATING ENGINE & INTERFACE CONTROLS ---
+        function minimizeMenu() {
+            document.getElementById('floatingMenu').classList.add('hidden');
+            document.getElementById('floatingIcon').classList.remove('hidden');
+        }
+
+        function maximizeMenu() {
+            document.getElementById('floatingIcon').classList.add('hidden');
+            document.getElementById('floatingMenu').classList.remove('hidden');
+        }
+
+        function removeMenu() {
+            document.getElementById('floatingMenu').remove();
+            document.getElementById('floatingIcon').remove();
+        }
+
+        // Draggable script component mapping logic
+        function setupDraggable(el, handle) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            handle.onmousedown = dragMouseDown;
+            handle.ontouchstart = dragMouseDown;
+
+            function dragMouseDown(e) {
+                e = e || window.event;
+                // Work with touch interface profiles
+                const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+                const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+                
+                pos3 = clientX;
+                pos4 = clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+                document.ontouchend = closeDragElement;
+                document.ontouchmove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event;
+                const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+                const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+
+                pos1 = pos3 - clientX;
+                pos2 = pos4 - clientY;
+                pos3 = clientX;
+                pos4 = clientY;
+                
+                el.style.top = (el.offsetTop - pos2) + "px";
+                el.style.left = (el.offsetLeft - pos1) + "px";
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+                document.ontouchend = null;
+                document.ontouchmove = null;
+            }
+        }
+
+        // Initialize drag processing behaviors across components
+        setupDraggable(document.getElementById("floatingMenu"), document.getElementById("menuHeader"));
+        setupDraggable(document.getElementById("floatingIcon"), document.getElementById("floatingIcon"));
+    </script>
+</body>
+          </html>
+          
